@@ -3,10 +3,9 @@ import AWS from "aws-sdk";
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 export async function main() {
-  const tableNameFromHeader = 'dev-rest-api-dynamodb-Counter'
   const getParams = {
     // Get the table name from the environment variable
-    TableName: tableNameFromHeader,
+    TableName: process.env.tableName,
     // Get the row where the counter is called "hits"
     Key: {
       counter: "hits",
@@ -19,7 +18,7 @@ export async function main() {
   let count = results.Item ? results.Item.tally : 0;
 
   const putParams = {
-    TableName: tableNameFromHeader,
+    TableName: process.env.tableName,
     Key: {
       counter: "hits",
     },
